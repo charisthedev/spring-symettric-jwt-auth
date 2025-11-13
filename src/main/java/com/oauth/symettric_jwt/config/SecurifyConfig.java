@@ -41,7 +41,7 @@ public class SecurifyConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.anyRequest()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/token").hasRole("USER").anyRequest()
                         .hasAuthority("SCOPE_READ"))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
